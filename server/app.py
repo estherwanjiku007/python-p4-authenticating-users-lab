@@ -61,13 +61,15 @@ class Logout(Resource):
     
 class CheckSession(Resource):
     def get():
-        user_id=session["user_id"]
-        #user=User.query.filter(User.id==session.get("user_id")).first()        
-        if user_id:
-            user=User.query.filter(User.id==user_id).first()        
-            return user.to_dict(),200
+       # user_id=session.get("user_id")
+        user=User.query.filter(User.id==session.get("user_id")).first()        
+        if user:
+            # user=User.query.filter(User.id==user_id).first()        
+            return make_response(jsonify(user.to_dict()),200,content_Type="application/json")
+        
         else:
-             return {'message': '401: Not Authorized'}, 401
+            return make_response(jsonify({},401))
+        
 api.add_resource(ClearSession, '/clear')
 api.add_resource(IndexArticle, '/articles')
 api.add_resource(ShowArticle, '/articles/<int:id>')
