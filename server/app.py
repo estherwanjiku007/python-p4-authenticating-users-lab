@@ -64,11 +64,9 @@ class CheckSession(Resource):
        # user_id=session.get("user_id")
         user=User.query.filter(User.id==session.get("user_id")).first()        
         if user:
-            # user=User.query.filter(User.id==user_id).first()        
-            return make_response(jsonify(user.to_dict()),200,content_Type="application/json")
-        
+            return make_response(jsonify(user.to_dict()),200)
         else:
-            return make_response(jsonify({},401))
+            return make_response(jsonify({}),401)
         
 api.add_resource(ClearSession, '/clear')
 api.add_resource(IndexArticle, '/articles')
